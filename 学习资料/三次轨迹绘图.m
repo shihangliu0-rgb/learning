@@ -1,0 +1,18 @@
+clear; clc; close all;
+q0 = -5; qf = 80; T = 4;
+t = linspace(0,T,401);
+dq = qf-q0;
+a0 = q0; a1 = 0;
+a2 = 3*dq/T^2; a3 = -2*dq/T^3;
+q   = a0 + a1*t + a2*t.^2 + a3*t.^3;
+qd  = a1 + 2*a2*t + 3*a3*t.^2;
+qdd = 2*a2 + 6*a3*t;
+assert(abs(q(1)-q0)<1e-9 && abs(q(end)-qf)<1e-9);
+assert(abs(qd(1))<1e-9 && abs(qd(end))<1e-9);
+subplot(3,1,1); plot(t,q,'LineWidth',1.5); grid on;
+ylabel('q (deg)'); title('Cubic joint trajectory');
+subplot(3,1,2); plot(t,qd,'LineWidth',1.5); grid on;
+ylabel('dq/dt (deg/s)');
+subplot(3,1,3); plot(t,qdd,'LineWidth',1.5); grid on;
+ylabel('d2q/dt2 (deg/s^2)'); xlabel('t (s)');
+fprintf('Peak speed: %.6f deg/s\n',max(abs(qd)));
