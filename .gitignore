@@ -1,0 +1,5 @@
+__pycache__/
+media/
+xml/
+render/*
+!render/ch2_image92.jpeg
